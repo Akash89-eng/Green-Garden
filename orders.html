@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .navbar {
+            background-color: green;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+        }
+        .back-button {
+            position: absolute;
+            left: 15px;
+            background: white;
+            color: black;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        .order-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .order {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .order:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="products.html" class="back-button">← Back</a>
+        My Orders
+    </div>
+    <div class="order-container" id="orders-list">
+        <h2>Order History</h2>
+    </div>
+    <script>
+        function loadOrders() {
+            let products = [
+                { id: 1, name: "Morning Jewel Rose Seed", price: "₹158" },
+                { id: 2, name: "Winter Daisy Red Mixed Seed", price: "₹150" },
+                { id: 3, name: "Bitter Gourd-kareka seed", price: "₹99" },
+                { id: 4, name: "Black Tomato", price: "₹110" },
+                { id: 5, name: "Broccoli Vegetable Seed", price: "₹89" },
+                { id: 6, name: "Brazilian Wood Plant", price: "₹550" },
+                { id: 7, name: "Apple Plant Hybrid", price: "₹100" },
+                { id: 8, name: "Cabbage Seed", price: "₹110" },
+                { id: 9, name: "Chinese Cabbage", price: "₹111" },
+                { id: 10, name: "Amaranthus Vegetable Seed", price: "₹130" },
+                { id: 11, name: "Farm Cauliflower Violetto", price: "₹120" },
+                { id: 12, name: "Kamal Seed", price: "₹149" },
+                { id: 13, name: "6 Birds Hanging Home Decor", price: "₹160" },
+                { id: 14, name: "Blue Ceramic Pot", price: "₹200" },
+                { id: 15, name: "Multicolor Plastic Pot", price: "₹400" },
+                { id: 16, name: "Signal Bicycle Pot Stand", price: "₹199" },
+                { id: 17, name: "Crystal Shaped Plastic Flower Pot", price: "₹299" },
+                { id: 18, name: "Organic Potting Mix", price: "₹360" },
+                { id: 19, name: "6 Tier Metal Pot Stand", price: "₹999" },
+                { id: 20, name: "Yellow Kalanchoe Flower Seed", price: "₹149" }
+            ];
+            localStorage.setItem("products", JSON.stringify(products));
+            
+            let orders = JSON.parse(localStorage.getItem("orders")) || [];
+            let ordersList = document.getElementById("orders-list");
+            if (orders.length === 0) {
+                ordersList.innerHTML += "<p>No orders found.</p>";
+                return;
+            }
+            orders.forEach(order => {
+                let orderElement = document.createElement("div");
+                orderElement.classList.add("order");
+                orderElement.innerHTML = `
+                    <h3>${order.productName}</h3>
+                    <p>Amount Paid: ${order.price}</p>
+                    <p>Address: ${order.address}</p>
+                    <p>Coupon: ${order.coupon}</p>
+                    <p>Payment Method: ${order.paymentMethod}</p>
+                    ${order.upiId ? `<p>UPI ID: ${order.upiId}</p>` : ""}
+                    ${order.bankDetails ? `<p>Bank Details: ${order.bankDetails}</p>` : ""}
+                `;
+                ordersList.appendChild(orderElement);
+            });
+        }
+        loadOrders();
+    </script>
+</body>
+</html>

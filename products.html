@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="product.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .navbar {
+            background-color: green;
+            padding: 15px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .navbar div {
+            flex: 1;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .search-bar {
+            flex-grow: 2;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .search-bar input {
+            width: 100%;
+            max-width: 300px;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+        }
+        .search-button, .refresh-button {
+            background: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            margin-left: 5px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .toggle-button {
+            position: absolute;
+            left: 15px;
+            cursor: pointer;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            color: black;
+        }
+        .profile {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            color: black;
+        }
+        .menu, .profile-menu {
+            display: none;
+            background: white;
+            position: absolute;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .menu {
+            top: 50px;
+            left: 10px;
+            width: 200px;
+        }
+        .profile-menu {
+            top: 50px;
+            right: 10px;
+            width: 100px;
+        }
+        .menu a, .profile-menu a {
+            display: block;
+            padding: 10px;
+            color: black;
+            text-decoration: none;
+            text-align: center;
+        }
+        .menu a:hover, .profile-menu a:hover {
+            background: lightgray;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .product-card {
+            background: white;
+            padding: 15px;
+            margin: 15px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+        }
+        .product img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="toggle-button" onclick="toggleMenu()">☰ Menu</div>
+        <div>Products</div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search products...">
+            <button class="search-button" onclick="searchProducts()">🔍</button>
+            <button class="refresh-button" onclick="refreshProducts()">🔄</button>
+        </div>
+        <div class="profile" onclick="toggleProfileMenu()">👤</div>
+    </div>
+    <div class="menu" id="menu">
+        <a href="home.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="orders.html">Orders</a>
+    </div>
+    <div class="profile-menu" id="profile-menu">
+        <a href="#" onclick="logout()">Logout</a>
+    </div>
+    <section id="product-list">
+        <div class="products">
+            <div class="product"onclick="openProductDetails(1)"><img src="images/F1.jpg" alt="Morning Jewel Rose"><h3>Morning Jewel Rose Seed</h3><p>₹158</p></div>
+            <div class="product"onclick="openProductDetails(2)"><img src="images/F2.jpg" alt="Winter Daisy"><h3>Winter Daisy Red Mixed Seed</h3><p>₹150</p></div>
+            <div class="product"onclick="openProductDetails(3)"><img src="images/F3.jpg" alt="Bitter Gourd"><h3>Bitter Gourd-kareka seed</h3><p>₹99</p></div>
+            <div class="product"onclick="openProductDetails(4)"><img src="images/F4.jpg" alt="Black Tomato"><h3>Black Tomato</h3><p>₹110</p></div>
+            <div class="product"onclick="openProductDetails(5)"><img src="images/F5.jpg" alt="Broccoli Seed"><h3>Broccoli Vegetable Seed</h3><p>₹89</p></div>
+            <div class="product"onclick="openProductDetails(6)"><img src="images/F6.jpg" alt="Brazilian Wood"><h3>Brazilian Wood Plant</h3><p>₹550</p></div>
+            <div class="product"onclick="openProductDetails(7)"><img src="images/F7.jpg" alt="Apple Plant"><h3>Apple Plant Hybrid</h3><p>₹100</p></div>
+            <div class="product"onclick="openProductDetails(8)"><img src="images/F8.jpg" alt="Cabbage Seed"><h3>Cabbage Seed</h3><p>₹110</p></div>
+            <div class="product"onclick="openProductDetails(9)"><img src="images/F9.jpg" alt="Chinese Cabbage"><h3>Chinese Cabbage</h3><p>₹111</p></div>
+            <div class="product"onclick="openProductDetails(10)"><img src="images/F10.jpg" alt="Amaranthus"><h3>Amaranthus Vegetable Seed</h3><p>₹130</p></div>
+            <div class="product"onclick="openProductDetails(11)"><img src="images/F11.jpg" alt="Cauliflower"><h3>Farm Cauliflower Violetto</h3><p>₹120</p></div>
+            <div class="product"onclick="openProductDetails(12)"><img src="images/F12.jpg" alt="Kamal Seed"><h3>Kamal Seed</h3><p>₹149</p></div>
+            <div class="product"onclick="openProductDetails(13)"><img src="images/F13.jpg" alt="Home Decor"><h3>6 Birds Hanging Home Decor</h3><p>₹160</p></div>
+            <div class="product"onclick="openProductDetails(14)"><img src="images/F14.jpg" alt="Ceramic Pot"><h3>Blue Ceramic Pot</h3><p>₹200</p></div>
+            <div class="product"onclick="openProductDetails(15)"><img src="images/F15.jpg" alt="Plastic Pot"><h3>Multicolor Plastic Pot</h3><p>₹400</p></div>
+            <div class="product"onclick="openProductDetails(16)"><img src="images/F16.jpg" alt="Pot Stand"><h3>Signal Bicycle Pot Stand</h3><p>₹199</p></div>
+            <div class="product"onclick="openProductDetails(17)"><img src="images/F17.jpg" alt="Plastic Flower Pot"><h3>Crystal Shaped Plastic Flower Pot</h3><p>₹299</p></div>
+            <div class="product"onclick="openProductDetails(18)"><img src="images/F18.jpg" alt="Potting Mix"><h3>Organic Potting Mix</h3><p>₹360</p></div>
+            <div class="product"onclick="openProductDetails(19)"><img src="images/F19.jpg" alt="Metal Pot Stand"><h3>6 Tier Metal Pot Stand</h3><p>₹999</p></div>
+            <div class="product"onclick="openProductDetails(20)"><img src="images/F20.jpg" alt="Kalanchoe"><h3>Yellow Kalanchoe Flower Seed</h3><p>₹149</p></div>
+        </div>
+    </section>
+    <script>
+        function openProductDetails(productId) {
+            window.location.href = `productdetails.html?id=${productId}`;
+        }
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+        function toggleProfileMenu() {
+            var profileMenu = document.getElementById("profile-menu");
+            profileMenu.style.display = profileMenu.style.display === "block" ? "none" : "block";
+        }
+        function logout() {
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = "Login.html";
+        }
+        function searchProducts() {
+            var input = document.getElementById("search-input").value.toLowerCase();
+            var products = document.querySelectorAll(".product");
+            products.forEach(product => {
+                var name = product.querySelector("h3").innerText.toLowerCase();
+                product.style.display = name.includes(input) ? "block" : "none";
+            });
+        }
+
+        function refreshProducts() {
+            document.getElementById("search-input").value = "";
+            document.querySelectorAll(".product").forEach(product => {
+                product.style.display = "block";
+            });
+        }
+    </script>
+</body>
+</html>

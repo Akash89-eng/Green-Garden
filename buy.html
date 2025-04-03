@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Product</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .navbar {
+            background-color: green;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+        }
+        .back-button {
+            position: absolute;
+            left: 15px;
+            background: white;
+            color: black;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        label, input, select {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+        .payment-options div {
+            display: none;
+        }
+        .place-order {
+            background-color: orange;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="products.html" class="back-button">← Back</a>
+        Buy Product
+    </div>
+    <div class="container">
+        <h2>Enter Address</h2>
+        <input type="text" id="address" placeholder="Enter your address">
+        <h2>Apply Coupon</h2>
+        <input type="text" id="coupon" placeholder="Enter coupon code">
+        <h2>Select Payment Method</h2>
+        <select id="payment-method" onchange="showPaymentFields()">
+            <option value="">Select Payment Method</option>
+            <option value="upi">UPI</option>
+            <option value="netbanking">Net Banking</option>
+            <option value="cashondelivery">Cash on delivery</option>
+        </select>
+        <div class="payment-options">
+            <div id="upi" class="payment-details">
+                <input type="text" id="upi-id" placeholder="Enter UPI ID">
+                <p>Or scan QR code:</p>
+                <img src="images/qr.png" alt="QR Code" width="150">
+            </div>
+            <div id="netbanking" class="payment-details">
+                <input type="text" id="bank-name" placeholder="Enter Bank Name">
+                <input type="text" id="account-number" placeholder="Enter Account Number">
+            </div>
+            <div  id="cashondelivery" class="payment-details"></div>
+        </div>
+        <button class="place-order" onclick="placeOrder()">Place Order</button>
+    </div>
+    <script>
+        function showPaymentFields() {
+            document.querySelectorAll('.payment-details').forEach(div => div.style.display = 'none');
+            const selected = document.getElementById('payment-method').value;
+            if (selected) {
+                document.getElementById(selected).style.display = 'block';
+            }
+        }
+
+        function placeOrder() {
+            const address = document.getElementById("address").value;
+            const coupon = document.getElementById("coupon").value;
+            const paymentMethod = document.getElementById("payment-method").value;
+            const upiId = document.getElementById("upi-id") ? document.getElementById("upi-id").value : "";
+            const bankName = document.getElementById("bank-name") ? document.getElementById("bank-name").value : "";
+            const accountNumber = document.getElementById("account-number") ? document.getElementById("account-number").value : "";
+
+            if (!address || !paymentMethod) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            const productId = new URLSearchParams(window.location.search).get("id");
+            const products = JSON.parse(localStorage.getItem("products")) || [];
+            const product = products.find(p => p.id == productId);
+
+            if (!product) {
+                alert("Product not found.");
+                return;
+            }
+
+            const order = {
+                productName: product.name,
+                price: product.price,
+                address: address,
+                coupon: coupon ? coupon : "No Coupon",
+                paymentMethod: paymentMethod,
+                upiId: paymentMethod === "upi" ? upiId : "",
+                bankDetails: paymentMethod === "netbanking" ? `${bankName} - ${accountNumber}` : ""
+            };
+
+            let orders = JSON.parse(localStorage.getItem("orders")) || [];
+            orders.push(order);
+            localStorage.setItem("orders", JSON.stringify(orders));
+
+            alert("Order placed successfully!");
+            window.location.href = "orders.html";
+        }
+    </script>
+</body>
+</html>
